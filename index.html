@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คู่มือการติดตั้ง React Native + Tailwind v4</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap');
+        body { font-family: 'Kanit', sans-serif; background-color: #f1f5f9; }
+        pre, code { font-family: 'Fira Code', monospace; }
+        .code-block { position: relative; }
+        .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; color: #94a3b8; transition: color 0.2s; }
+        .copy-btn:hover { color: #3b82f6; }
+        .step-pill { background: #3b82f6; color: white; padding: 2px 10px; border-radius: 999px; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; display: inline-block; }
+    </style>
+</head>
+<body class="py-10 px-4">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-bold text-slate-800 mb-3">React Native + NativeWind Setup</h1>
+            <p class="text-slate-600">สรุปขั้นตอนการติดตั้ง Tailwind CSS สำหรับโปรเจกต์ Expo (ฉบับใช้งานได้จริงบน Windows)</p>
+        </header>
+
+        <!-- Command Section -->
+        <div class="space-y-6">
+            
+            <!-- Step 1 -->
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <span class="step-pill">ขั้นตอนที่ 1</span>
+                <h2 class="text-xl font-bold text-slate-800 mb-4 text-sm md:text-base">สร้างโปรเจกต์ และติดตั้ง Dependencies</h2>
+                <div class="space-y-4 text-xs md:text-sm font-light">
+                    <div class="code-block bg-slate-900 p-4 rounded-xl">
+                        <code class="text-blue-400 font-bold block mb-2"># 1. สร้างโปรเจกต์</code>
+                        <code class="text-slate-300">npx create-expo-app@latest my-app</code>
+                    </div>
+                    <div class="code-block bg-slate-900 p-4 rounded-xl">
+                        <code class="text-blue-400 font-bold block mb-2"># 2. ติดตั้ง NativeWind และ Peer Dependencies</code>
+                        <code class="text-slate-300">npm install nativewind react-native-reanimated@~3.17.4 react-native-safe-area-context@5.4.0</code>
+                    </div>
+                    <div class="code-block bg-slate-900 p-4 rounded-xl">
+                        <code class="text-blue-400 font-bold block mb-2"># 3. ติดตั้ง Tailwind CSS (Dev)</code>
+                        <code class="text-slate-300">npm install --save-dev tailwindcss@^3.4.17 prettier-plugin-tailwindcss@^0.5.11</code>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 2 -->
+            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <span class="step-pill">ขั้นตอนที่ 2</span>
+                <h2 class="text-xl font-bold text-slate-800 mb-4">ตั้งค่าไฟล์ Configuration</h2>
+                
+                <div class="space-y-6">
+                    <!-- tailwind.config.js -->
+                    <div>
+                        <p class="text-sm font-semibold text-slate-500 mb-2 italic">ไฟล์: tailwind.config.js</p>
+                        <div class="code-block bg-slate-900 p-4 rounded-xl text-xs md:text-sm">
+<pre class="text-slate-300">
+module.exports = {
+  content: [
+    "./app/**/*.{js,jsx,ts,tsx}",
+    "./components/**/*.{js,jsx,ts,tsx}"
+  ],
+  presets: [require("nativewind/preset")],
+  theme: { extend: {} },
+  plugins: [],
+};</pre>
+                        </div>
+                    </div>
+
+                    <!-- global.css -->
+                    <div>
+                        <p class="text-sm font-semibold text-slate-500 mb-2 italic">ไฟล์: global.css</p>
+                        <div class="code-block bg-slate-900 p-4 rounded-xl text-xs md:text-sm">
+<pre class="text-indigo-400 font-bold">
+@tailwind base;
+@tailwind components;
+@tailwind utilities;</pre>
+                        </div>
+                    </div>
+
+                    <!-- babel.config.js -->
+                    <div>
+                        <p class="text-sm font-semibold text-slate-500 mb-2 italic">ไฟล์: babel.config.js</p>
+                        <div class="code-block bg-slate-900 p-4 rounded-xl text-xs md:text-sm">
+<pre class="text-slate-300">
+module.exports = function (api) {
+  api.cache(true);
+  return {
+    presets: [
+      ["babel-preset-expo", { jsxImportSource: "nativewind" }],
+      "nativewind/babel",
+    ],
+  };
+};</pre>
+                        </div>
+                    </div>
+
+                    <!-- metro.config.js -->
+                    <div>
+                        <p class="text-sm font-semibold text-slate-500 mb-2 italic">ไฟล์: metro.config.js (หรือ metro.config.cjs สำหรับ Windows)</p>
+                        <div class="code-block bg-slate-900 p-4 rounded-xl text-xs md:text-sm">
+<pre class="text-slate-300">
+const { getDefaultConfig } = require("expo/metro-config");
+const { withNativeWind } = require('nativewind/metro');
+
+const config = getDefaultConfig(__dirname);
+
+module.exports = withNativeWind(config, { input: './global.css' });</pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Troubleshooting -->
+            <section class="bg-amber-50 p-6 rounded-2xl shadow-sm border border-amber-200">
+                <h2 class="text-xl font-bold text-amber-800 mb-4 flex items-center">
+                    <i class="fa-solid fa-triangle-exclamation mr-2 text-sm md:text-base"></i> ข้อควรระวังและการแก้ปัญหา (Troubleshooting)
+                </h2>
+                <div class="space-y-4 text-sm text-amber-900">
+                    <div class="flex gap-3">
+                        <div class="font-bold text-amber-600">1.</div>
+                        <p><span class="font-bold">Error Protocol 'd:':</span> หากรันบน Windows แล้วติดเรื่อง ESM URL Scheme ให้เปลี่ยนชื่อไฟล์ <code class="bg-amber-100 px-1 rounded">metro.config.js</code> เป็น <code class="bg-amber-100 px-1 rounded">metro.config.cjs</code></p>
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="font-bold text-amber-600">2.</div>
+                        <p><span class="font-bold">Tailwind ไม่แสดงผล:</span> ตรวจสอบว่าใน <code class="bg-amber-100 px-1 rounded">app/_layout.tsx</code> มีการ import ไฟล์ CSS หรือไม่ (เช่น <code class="bg-amber-100 px-1 rounded text-xs">import "../global.css"</code>)</p>
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="font-bold text-amber-600">3.</div>
+                        <p><span class="font-bold">ล้าง Cache:</span> ทุกครั้งที่แก้ไขไฟล์ Config สำคัญ ให้รันด้วยคำสั่ง <code class="bg-slate-800 text-white px-2 py-0.5 rounded text-xs font-mono">npx expo start -c</code></p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer class="mt-12 text-center text-slate-400 text-sm">
+            <p>บันทึกช่วยจำ - สร้างขึ้นเพื่อสรุปขั้นตอนที่ใช้งานได้จริงบนระบบ Windows</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple copy functionality can be added here if needed
+    </script>
+</body>
+</html>
