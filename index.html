@@ -3,61 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>คู่มือการติดตั้ง React Native + Tailwind v4</title>
+    <title>คู่มือการติดตั้ง React Native + Tailwind v4 (ฉบับสมบูรณ์)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Fira+Code:wght@400;500&display=swap');
-        body { font-family: 'Kanit', sans-serif; background-color: #f1f5f9; }
+        body { font-family: 'Kanit', sans-serif; background-color: #f8fafc; }
         pre, code { font-family: 'Fira Code', monospace; }
-        .code-block { position: relative; }
-        .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; color: #94a3b8; transition: color 0.2s; }
-        .copy-btn:hover { color: #3b82f6; }
-        .step-pill { background: #3b82f6; color: white; padding: 2px 10px; border-radius: 999px; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; display: inline-block; }
+        .code-container { position: relative; }
+        .copy-btn { 
+            position: absolute; top: 0.75rem; right: 0.75rem; 
+            background: rgba(59, 130, 246, 0.1); color: #3b82f6;
+            padding: 4px 8px; border-radius: 6px; font-size: 0.75rem;
+            transition: all 0.2s; border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        .copy-btn:hover { background: #3b82f6; color: white; }
+        .step-card { background: white; border-radius: 1rem; border: 1px solid #e2e8f0; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .step-number { background: #3b82f6; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.875rem; font-weight: bold; margin-right: 0.75rem; }
     </style>
 </head>
-<body class="py-10 px-4">
-    <div class="max-w-4xl mx-auto">
+<body class="py-10 px-4 md:px-0">
+    <div class="max-w-3xl mx-auto">
         <!-- Header -->
-        <header class="mb-10 text-center">
-            <h1 class="text-4xl font-bold text-slate-800 mb-3">React Native + NativeWind Setup</h1>
-            <p class="text-slate-600">สรุปขั้นตอนการติดตั้ง Tailwind CSS สำหรับโปรเจกต์ Expo (ฉบับใช้งานได้จริงบน Windows)</p>
+        <header class="text-center mb-12">
+            <div class="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold mb-4">LATEST VERSION</div>
+            <h1 class="text-4xl font-bold text-slate-900 mb-2">React Native + Tailwind v4</h1>
+            <p class="text-slate-500">ขั้นตอนการติดตั้งที่ผ่านการทดสอบแล้วว่าใช้งานได้จริงบน Windows</p>
         </header>
 
-        <!-- Command Section -->
-        <div class="space-y-6">
-            
-            <!-- Step 1 -->
-            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <span class="step-pill">ขั้นตอนที่ 1</span>
-                <h2 class="text-xl font-bold text-slate-800 mb-4 text-sm md:text-base">สร้างโปรเจกต์ และติดตั้ง Dependencies</h2>
-                <div class="space-y-4 text-xs md:text-sm font-light">
-                    <div class="code-block bg-slate-900 p-4 rounded-xl">
-                        <code class="text-blue-400 font-bold block mb-2"># 1. สร้างโปรเจกต์</code>
-                        <code class="text-slate-300">npx create-expo-app@latest my-app</code>
-                    </div>
-                    <div class="code-block bg-slate-900 p-4 rounded-xl">
-                        <code class="text-blue-400 font-bold block mb-2"># 2. ติดตั้ง NativeWind และ Peer Dependencies</code>
-                        <code class="text-slate-300">npm install nativewind react-native-reanimated@~3.17.4 react-native-safe-area-context@5.4.0</code>
-                    </div>
-                    <div class="code-block bg-slate-900 p-4 rounded-xl">
-                        <code class="text-blue-400 font-bold block mb-2"># 3. ติดตั้ง Tailwind CSS (Dev)</code>
-                        <code class="text-slate-300">npm install --save-dev tailwindcss@^3.4.17 prettier-plugin-tailwindcss@^0.5.11</code>
-                    </div>
-                </div>
-            </section>
+        <!-- Step 1: Init -->
+        <div class="step-card">
+            <div class="flex items-center mb-4">
+                <div class="step-number">1</div>
+                <h2 class="text-xl font-bold text-slate-800">สร้างโปรเจกต์ Expo</h2>
+            </div>
+            <div class="code-container bg-slate-900 p-4 rounded-xl">
+                <code id="cmd-1" class="text-blue-400">npx create-expo-app@latest my-app</code>
+                <button onclick="copyText('cmd-1')" class="copy-btn"><i class="fa-regular fa-copy mr-1"></i>Copy</button>
+            </div>
+        </div>
 
-            <!-- Step 2 -->
-            <section class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <span class="step-pill">ขั้นตอนที่ 2</span>
-                <h2 class="text-xl font-bold text-slate-800 mb-4">ตั้งค่าไฟล์ Configuration</h2>
-                
-                <div class="space-y-6">
-                    <!-- tailwind.config.js -->
-                    <div>
-                        <p class="text-sm font-semibold text-slate-500 mb-2 italic">ไฟล์: tailwind.config.js</p>
-                        <div class="code-block bg-slate-900 p-4 rounded-xl text-xs md:text-sm">
-<pre class="text-slate-300">
+        <!-- Step 2: Install Dependencies -->
+        <div class="step-card">
+            <div class="flex items-center mb-4">
+                <div class="step-number">2</div>
+                <h2 class="text-xl font-bold text-slate-800">ติดตั้ง Dependencies & Fix Reanimated</h2>
+            </div>
+            <p class="text-sm text-slate-600 mb-4">ติดตั้ง Library พื้นฐานและซ่อมแซมเวอร์ชัน Reanimated ให้เข้ากับเครื่อง:</p>
+            <div class="space-y-3">
+                <div class="code-container bg-slate-900 p-4 rounded-xl">
+                    <code id="cmd-2" class="text-green-400 text-sm">npm install nativewind react-native-reanimated@~3.17.4 react-native-safe-area-context@5.4.0</code>
+                    <button onclick="copyText('cmd-2')" class="copy-btn"><i class="fa-regular fa-copy mr-1"></i>Copy</button>
+                </div>
+                <div class="code-container bg-slate-900 p-4 rounded-xl">
+                    <code id="cmd-3" class="text-green-400 text-sm">npx expo install react-native-reanimated --fix</code>
+                    <button onclick="copyText('cmd-3')" class="copy-btn"><i class="fa-regular fa-copy mr-1"></i>Copy</button>
+                </div>
+                <div class="code-container bg-slate-900 p-4 rounded-xl">
+                    <code id="cmd-4" class="text-green-400 text-sm">npm install --save-dev tailwindcss@^3.4.17 prettier-plugin-tailwindcss@^0.5.11</code>
+                    <button onclick="copyText('cmd-4')" class="copy-btn"><i class="fa-regular fa-copy mr-1"></i>Copy</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: Tailwind Config -->
+        <div class="step-card">
+            <div class="flex items-center mb-4">
+                <div class="step-number">3</div>
+                <h2 class="text-xl font-bold text-slate-800 text-sm md:text-base">ไฟล์: tailwind.config.js</h2>
+            </div>
+            <div class="code-container bg-slate-900 p-4 rounded-xl overflow-x-auto">
+<pre id="code-tailwind" class="text-slate-300 text-xs">
 module.exports = {
   content: [
     "./app/**/*.{js,jsx,ts,tsx}",
@@ -67,25 +83,33 @@ module.exports = {
   theme: { extend: {} },
   plugins: [],
 };</pre>
-                        </div>
-                    </div>
+                <button onclick="copyText('code-tailwind')" class="copy-btn"><i class="fa-regular fa-copy mr-1"></i>Copy</button>
+            </div>
+        </div>
 
-                    <!-- global.css -->
-                    <div>
-                        <p class="text-sm font-semibold text-slate-500 mb-2 italic">ไฟล์: global.css</p>
-                        <div class="code-block bg-slate-900 p-4 rounded-xl text-xs md:text-sm">
-<pre class="text-indigo-400 font-bold">
+        <!-- Step 4: CSS -->
+        <div class="step-card">
+            <div class="flex items-center mb-4">
+                <div class="step-number">4</div>
+                <h2 class="text-xl font-bold text-slate-800 text-sm md:text-base">ไฟล์: global.css</h2>
+            </div>
+            <div class="code-container bg-slate-900 p-4 rounded-xl">
+<pre id="code-css" class="text-indigo-400 font-bold text-xs">
 @tailwind base;
 @tailwind components;
 @tailwind utilities;</pre>
-                        </div>
-                    </div>
+                <button onclick="copyText('code-css')" class="copy-btn"><i class="fa-regular fa-copy mr-1"></i>Copy</button>
+            </div>
+        </div>
 
-                    <!-- babel.config.js -->
-                    <div>
-                        <p class="text-sm font-semibold text-slate-500 mb-2 italic">ไฟล์: babel.config.js</p>
-                        <div class="code-block bg-slate-900 p-4 rounded-xl text-xs md:text-sm">
-<pre class="text-slate-300">
+        <!-- Step 5: Babel -->
+        <div class="step-card">
+            <div class="flex items-center mb-4">
+                <div class="step-number">5</div>
+                <h2 class="text-xl font-bold text-slate-800 text-sm md:text-base">ไฟล์: babel.config.js (เพิ่ม Plugin Reanimated)</h2>
+            </div>
+            <div class="code-container bg-slate-900 p-4 rounded-xl overflow-x-auto">
+<pre id="code-babel" class="text-slate-300 text-xs">
 module.exports = function (api) {
   api.cache(true);
   return {
@@ -93,56 +117,68 @@ module.exports = function (api) {
       ["babel-preset-expo", { jsxImportSource: "nativewind" }],
       "nativewind/babel",
     ],
+    plugins: [
+      "react-native-reanimated/plugin",
+    ],
   };
 };</pre>
-                        </div>
-                    </div>
+                <button onclick="copyText('code-babel')" class="copy-btn"><i class="fa-regular fa-copy mr-1"></i>Copy</button>
+            </div>
+        </div>
 
-                    <!-- metro.config.js -->
-                    <div>
-                        <p class="text-sm font-semibold text-slate-500 mb-2 italic">ไฟล์: metro.config.js (หรือ metro.config.cjs สำหรับ Windows)</p>
-                        <div class="code-block bg-slate-900 p-4 rounded-xl text-xs md:text-sm">
-<pre class="text-slate-300">
+        <!-- Step 6: Metro -->
+        <div class="step-card">
+            <div class="flex items-center mb-4">
+                <div class="step-number">6</div>
+                <h2 class="text-xl font-bold text-slate-800 text-sm md:text-base">ไฟล์: metro.config.js (หรือ .cjs)</h2>
+            </div>
+            <div class="code-container bg-slate-900 p-4 rounded-xl overflow-x-auto">
+<pre id="code-metro" class="text-slate-300 text-xs">
 const { getDefaultConfig } = require("expo/metro-config");
 const { withNativeWind } = require('nativewind/metro');
 
 const config = getDefaultConfig(__dirname);
 
 module.exports = withNativeWind(config, { input: './global.css' });</pre>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Troubleshooting -->
-            <section class="bg-amber-50 p-6 rounded-2xl shadow-sm border border-amber-200">
-                <h2 class="text-xl font-bold text-amber-800 mb-4 flex items-center">
-                    <i class="fa-solid fa-triangle-exclamation mr-2 text-sm md:text-base"></i> ข้อควรระวังและการแก้ปัญหา (Troubleshooting)
-                </h2>
-                <div class="space-y-4 text-sm text-amber-900">
-                    <div class="flex gap-3">
-                        <div class="font-bold text-amber-600">1.</div>
-                        <p><span class="font-bold">Error Protocol 'd:':</span> หากรันบน Windows แล้วติดเรื่อง ESM URL Scheme ให้เปลี่ยนชื่อไฟล์ <code class="bg-amber-100 px-1 rounded">metro.config.js</code> เป็น <code class="bg-amber-100 px-1 rounded">metro.config.cjs</code></p>
-                    </div>
-                    <div class="flex gap-3">
-                        <div class="font-bold text-amber-600">2.</div>
-                        <p><span class="font-bold">Tailwind ไม่แสดงผล:</span> ตรวจสอบว่าใน <code class="bg-amber-100 px-1 rounded">app/_layout.tsx</code> มีการ import ไฟล์ CSS หรือไม่ (เช่น <code class="bg-amber-100 px-1 rounded text-xs">import "../global.css"</code>)</p>
-                    </div>
-                    <div class="flex gap-3">
-                        <div class="font-bold text-amber-600">3.</div>
-                        <p><span class="font-bold">ล้าง Cache:</span> ทุกครั้งที่แก้ไขไฟล์ Config สำคัญ ให้รันด้วยคำสั่ง <code class="bg-slate-800 text-white px-2 py-0.5 rounded text-xs font-mono">npx expo start -c</code></p>
-                    </div>
-                </div>
-            </section>
+                <button onclick="copyText('code-metro')" class="copy-btn"><i class="fa-regular fa-copy mr-1"></i>Copy</button>
+            </div>
         </div>
 
-        <footer class="mt-12 text-center text-slate-400 text-sm">
-            <p>บันทึกช่วยจำ - สร้างขึ้นเพื่อสรุปขั้นตอนที่ใช้งานได้จริงบนระบบ Windows</p>
+        <!-- Troubleshooting -->
+        <div class="bg-red-50 border border-red-200 rounded-xl p-6 mb-12">
+            <h3 class="text-red-800 font-bold mb-3 flex items-center">
+                <i class="fa-solid fa-bug mr-2 text-sm md:text-base"></i> วิธีแก้ Error "useScrollOffset is not a function"
+            </h3>
+            <ol class="list-decimal list-inside text-sm text-red-900 space-y-2">
+                <li>ตรวจสอบ <span class="font-bold">babel.config.js</span> ว่ามี <code class="bg-red-100 px-1 rounded">react-native-reanimated/plugin</code> หรือยัง</li>
+                <li>รันคำสั่ง <code class="bg-red-100 px-1 rounded">npx expo install react-native-reanimated --fix</code></li>
+                <li>ในไฟล์ <code class="bg-red-100 px-1 rounded">components/parallax-scroll-view.tsx</code> ตรวจสอบว่า import <code class="bg-red-100 px-1 rounded">useScrollViewOffset</code> (มีคำว่า View)</li>
+                <li>สั่งรันใหม่ด้วย <span class="font-bold underline">npx expo start -c</span></li>
+            </ol>
+        </div>
+
+        <footer class="text-center text-slate-400 text-xs pb-10 italic">
+            สร้างขึ้นเพื่อบันทึกขั้นตอนที่ใช้งานได้จริงบนโปรเจกต์ mobile_pwa
         </footer>
     </div>
 
     <script>
-        // Simple copy functionality can be added here if needed
+        function copyText(id) {
+            const text = document.getElementById(id).innerText;
+            const tempInput = document.createElement("textarea");
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            
+            // Visual feedback
+            const toast = document.createElement("div");
+            toast.className = "fixed top-10 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white px-6 py-2 rounded-full shadow-2xl z-50 animate-bounce";
+            toast.innerText = "คัดลอกลง Clipboard แล้ว!";
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
+        }
     </script>
 </body>
 </html>
